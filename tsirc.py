@@ -130,7 +130,10 @@ class Bot(BrokenClientWorkaround):
 			entries = self.feeds[channel].get_new_entries()
 			msg("%s new tweets for '%s'." % (len(entries), channel))
 			for e in entries:
-				self.privmsg(self.sanitise_channel(channel), e)
+				try:
+					self.privmsg(self.sanitise_channel(channel), e)
+				except Exception as e:
+					msg(e)
 			return
 
 		for channel, feed in self.feeds.items():

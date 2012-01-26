@@ -9,8 +9,9 @@ def msg(msg):
 
 
 class SearchFeed:
-	def __init__(self, query):
+	def __init__(self, query, retweets=False):
 		self.url = 'http://search.twitter.com/search.atom?q=' + urlquote(query)
+		self.retweets = retweets
 		self.update_feed()
 		self.last_tweet = None
 		
@@ -29,6 +30,8 @@ class SearchFeed:
 		for entry in reversed(self.feed['entries']):
 			dt = entry['published_parsed']
 			if not self.last_tweet or dt > self.last_tweet:
+				if not self.retweets and entry['title'].startswith("RT"):
+					continue
 				results.append(self._format_message(entry))
 		
 		self.last_tweet = dt

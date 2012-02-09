@@ -15,7 +15,7 @@ class SearchFeed:
 		self.update_feed()
 		self.last_tweet = None
 		
-		i = min(len(self.feed['entries']), 5)
+		i = min(len(self.feed['entries'])-1, 5)
 		if i > 0:
 			self.last_tweet = self.feed['entries'][i]['published_parsed']
 
